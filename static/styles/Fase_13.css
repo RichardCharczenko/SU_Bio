@@ -1,0 +1,107 @@
+textarea{
+	rows: 200;
+	columns: 300;
+	width: 400px;
+	height: 200px;
+	box-sizing: border-box;
+	border: 2px solid #ccc;
+	border-radius: 4px;
+	background-color: #f8f8f8;
+	resize: none;
+}
+
+.topPage p{
+	text-indent: 40px;
+	margin-right:70px;
+	text-align:left;
+	font-family: sans-serif;
+	margin-left: 60px;
+}
+
+#pathImg{
+	float: left;
+	border: 1px #e8edf4 black;
+	width: 20%;
+	padding: 11px;
+}
+
+#ConcentrationGraph{
+	width: 95%;
+	height: 700px;
+	border: solid #bababa;
+}
+
+#introduction{
+	text-align:center;
+}
+
+.WordBlock textarea{
+	font-size:10pt;
+	height:150px;
+	width:400px;
+}
+
+.boxSpan{
+	border: 1px solid black;
+	float: right;
+	width: 40%;
+	height: 600px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+#subBlock1{
+	text-align:center;
+}
+
+#mutOpt{
+	text-align: left;
+}
+
+#concOpt{
+	text-align: right;
+}
+
+.options{
+	color: black;
+	padding: -10px;
+	height: auto;
+}
+
+.textInputBox{
+	background-color: #b2b4b7;
+	border: 1px solid black;
+}
+
+.flex_container{
+	flex: 1 100%;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+	border: 2px solid #ccc;
+	height: auto;
+	padding: 10px;
+}
+
+.flex_container > div{
+	width: 550px;
+	padding: 5px;
+	margin: 0px;
+	overflow-y: auto;
+	height: 710px;
+}
+
+.flex_container span{
+	width: 90%;
+	height: 400px;
+	box-sizing: border-box;
+	padding: 30px;
+	border-top: 2px solid #ccc;
+	overflow-y: auto;
+}
+
+.flex_container ul{
+	margin: 0px;
+	list-style-type: none;
+	padding-left: 20px;
+}

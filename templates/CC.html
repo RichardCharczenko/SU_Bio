@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+{% block body %}
+<script LANGUAGE="javascript" src = "{{url_for('static', filename='scripts/scripts.js')}}"></script>
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/EVO_12.css') }}">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/StyleSheet_1.css') }}">
+
+	<h2 id="header">Cell Cycle Simulation</h2>
+
+	<div class="topPage">
+
+	</div>
+
+	<div id="graphDef">
+      <p id = "introduction" style="padding:10px;"></p>
+
+	<div id= "options">
+		<div class="tab">
+		  <button class="tablinks active" onclick="openTab(event, 'Opt')"><font size = +1>Scenario's</font></button>
+		</div>
+
+		<form method="POST">
+      <div id="Opt" class="tabcontent">
+  		  <h3>Cell Cycle Simulator</h3>
+
+  		  <span class = "WordBlock">
+					<div class = "flex-container">
+						<div id= "options_div1">
+							<label class="Mycontainer"><font size = +0> p53 is a protein responsible for preventing the initiation of DNA replication in DNA damaged cells at the GS/S checkpoint, checking cells for unreplicated DNA at the S checkpoint, helping maintain G2 arrest when necessary at the G2/M checkpoint, and checking for aneuploidy (abnormal number of chromosomes) at the Spindle Assembly Checkpoint</font>
+								<input class="checkbox" type="checkbox" onchange="cbChange(this)" name = 'Scenario1'>
+								<span class="checkmark"></span>
+							</label>
+							<label class="Mycontainer"><font size = +0>Without p53 protein, the cell cycle continues as if it is healthy, disregarding any possible errors and consequently propagating these errors into future cell division. Interestingly, up to 50% of all human tumors contain p53 mutants</font>
+								<input class="checkbox" type="checkbox" onchange="cbChange(this)" name = 'Scenario2'>
+								<span class="checkmark"></span>
+							</label>
+							<label class="Mycontainer"><font size = +0>DNA damage stimulates p53 protein levels, which are typically low throughout a healthy cell cycle. Upregualtion of p53 at cycle checkpoints can start DNA damage repair so the cell can progress through the cell cycle, or can initiate apoptosis to prevent severely damaged cells from replicating.</font>
+								<input class="checkbox" type="checkbox" onchange="cbChange(this)" name = 'Scenario3'>
+								<span class="checkmark"></span>
+							</label>
+							<label class="Mycontainer"><font size = +0> Retinoblastoma (Rb) is a tumor suppressor protein. Rb expression prevents excessive cell growth by inhibiting cell cycle progression until a cell is ready to divide. When the cell is ready to divide, Rb is inactivated, allowing cell cycle progression.</font>
+								<input class="checkbox" type="checkbox" onchange="cbChange(this)" name = 'Scenario4'>
+								<span class="checkmark"></span>
+							</label>
+							<label class="Mycontainer"><font size = +0> p53 and rB are not present and there is DNA damage.</font>
+								<input class="checkbox" type="checkbox" onchange="cbChange(this)" name = 'Scenario5'>
+								<span class="checkmark"></span>
+							</label>
+							<label class="Mycontainer"><font size = +0> Dysfunctional retinoblastoma tumor (Rb) is associated with several cancers. Without active Rb, cells may not enter senescence following cell cycle completion. The ability for Rb to initiate a senscent state in which cells are metabolically active but cannot replicate is animportant antitumor mechanism and prevents cells from proliferating with DNA damage or activated oncogenes (genes that have the ability to cause cancer).</font>
+								<input class="checkbox" type="checkbox" onchange="cbChange(this)" name = 'Scenario6'>
+								<span class="checkmark"></span>
+							</label>
+						</div>
+					</div>
+			</span>
+  		</div>
+
+		<input id="GG" type="submit" value="Run Simulation"><br><br>
+	 </form>
+	</div><br>
+
+		<div class="container" align="center">
+			<embed type="image/svg+xml" src={{graph_data|safe}} style='max-width:1000px' id = "Graph"/>
+		</div>
+	</div>
+
+	<div id="endPage">
+	  <p>For copyright and references see <a href = "/about"> about page.</a></p>
+	</div>
+
+	<script language="javascript">
+		document.getElementById("Opt").style.display = 'block';
+	</script>
+{% endblock %}

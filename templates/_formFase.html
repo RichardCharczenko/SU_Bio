@@ -1,0 +1,37 @@
+{% macro render_field(field , seq = 'none') %}
+  <dt>{{ field.label }}
+
+  {% if seq != 'none' %}
+    <dd><input class = "seq_text"  required type= "text", name = "sequence" value></dd>
+  {% endif %}
+
+  {% if seq == 'none' %}
+  <dd>{{ field(**kwargs)|safe }}
+      {% if field.errors and field.label == "Sequence" %}    
+          {% for error in field.errors %}
+          <li color = "red">{{ error }}</li>
+          {% endfor %}
+      {% endif %}
+  </dd>
+  {% endif %}
+{% endmacro %}
+
+{% macro render_tree_seq(data) %}
+  {% for item in data %}
+    {% if item[:9] == 'Sequence' %}
+      <br>
+    {% endif %}
+    <p> {{item}} </p>
+  {% endfor %}
+{% endmacro%}
+
+{% macro render_data(data) %}
+  {%for item in data%}
+
+    {% for val in item %}
+      <p>{{val}}</p>
+    {% endfor %}
+
+    <br>
+  {% endfor %}
+{% endmacro %}

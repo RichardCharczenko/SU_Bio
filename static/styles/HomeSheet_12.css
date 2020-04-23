@@ -1,0 +1,115 @@
+p{
+color:black;
+margin: 0px;
+overflow:hidden;
+}
+
+h1{
+	line-height:1em;
+	background-color: #f44336;
+	font-family:Arial Black;
+	text-align:center;
+}
+
+.topPage {
+	overflow: hidden;
+	display: show;
+	width: 100%;
+	height: auto;
+  padding: 0px;
+  margin: 0px;
+	background-color: #e8edf4;
+}
+
+.topPage p{
+	margin-left:40px;
+	margin-right: 50px;
+	text-align:left;
+	font-family: sans-serif;
+}
+
+#description{
+	text-indent: 40px;
+	margin-left: 60px;
+}
+
+.paragraph_title{
+	font-weight: bold;
+	margin-left: 40px;
+}
+
+.Contributors{
+	list-style-type: none;
+	margin-top: 0px;
+	margin-left: 60px;
+	padding: 0;
+}
+
+.Contributors dt{
+	text-decoration: underline;
+	font-weight: normal;
+}
+
+.Contributors dd{
+	text-indent: 30px;
+}
+
+.MidPage{
+	display: show;
+	width: 100%;
+	height: auto;
+  padding-bottom: 20px;
+  margin: 0px;
+	background-color: white;
+}
+
+.MidPage div{
+	background-color: #e8edf4;
+	/*border: 1px solid black;*/
+	margin:5px auto;
+	margin-left: 90px;
+	margin-top: 0px;
+	height: auto;
+	width: 300px;
+	display: inline-block;
+}
+
+.midImageBox{
+	border: 2px solid #6d737c;
+	display: inline-block;
+	margin-left: 90px;
+	width: 300px;
+	height: auto;
+	padding-bottom: 0px;
+}
+
+.midImageBox img{
+	padding-left: 0px;
+	float: left;
+	height: 351px;
+	width: 290px;
+}
+
+#evoImg{
+	height: 351px;
+	width: 296px;
+}
+
+
+.lab_box p{
+	margin: 8px;
+}
+
+#introduction{
+	text-align:center;
+}
+
+#endPage{
+	text-align: center;
+	display: show;
+	width: 100%;
+	height: 100px;
+  padding: 0px;
+  margin: 0px;
+	background-color: #e8edf4;
+}

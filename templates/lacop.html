@@ -1,0 +1,299 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<script LANGUAGE="javascript" src = "{{url_for('static', filename='scripts/scripts.js')}}"></script>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/lacop_12.css') }}">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/StyleSheet_1.css') }}">
+
+{% from "_formhelpers.html" import render_field %}
+{% from "_formhelpers.html" import render_legend %}
+{% from "_formhelpers.html" import render_plasmid %}
+
+<h2 id="header"> LacOp Simulation</h2>
+
+	<div class="topPage">
+	  <img src="{{ user_image }}" id="pathImg">
+	  <span>
+	    <p>
+				 This (LacOP) simulation approximates the function of the E coli “Lactose Operon” in a single <i>E. coli.</i>
+				 Use the tabs below to configure an initial sugar concentration, select desired mutations and then
+				 click the button to “Run Pathway & Make Graph”. For example, (e.g. select Sugars, and set Lactose
+				 outside to 100 units, with the other sugars set to ‘0’), and select “Run…’. Each run will create a
+				  dynamic pathway simulation with these inputs on our server and graph which the concentrations of
+					key molecules through time. By rerunning the pathway and modifying sugar levels and/or mutations,
+					students will gain a deeper understanding of how the lac operon is transcriptionally regulated.
+			</p><br>
+			<p>
+					For initial simplicity, this simulation runs with a defaults that simulates the wild-type Lac
+					Operon, with the exception that “CAP” has been initially disabled. When students are ready for additional
+					complexity, they can activate CAP using the “CAP-cAMP complex” tab. Students can also test partial
+					 diploid strains using the “Plasmid” tab.
+			</p>
+
+			<br>
+			<a href = "{{ lesson_file }}" class="Download"> <button class="collapsible">Download Worksheet</button></a>
+	  </span>
+		<br>
+	</div>
+
+	<div id="graphDef">
+
+		<div id= "options">
+			<div class="tab" onload = "openCity('onclick', 'sugars')">
+				<button class="tablinks" onclick="openTab(event, 'sugars')">Sugars</button>
+				<button class="tablinks" onclick="openTab(event, 'Prom')">Promoter</button>
+				<button class="tablinks" onclick="openTab(event, 'Op')">Operator</button>
+			    <button class="tablinks" onclick="openTab(event, 'Rep')">Repressor</button>
+				<button class="tablinks" onclick="openTab(event, 'Perm')">Permease</button>
+			    <button class="tablinks" onclick="openTab(event, 'Bgal')">Beta-Galactasidase</button>
+				<button class="tablinks" onclick="openTab(event, 'CAP')">CAP-cAMP Complex</button>
+				<button class="tablinks" onclick="openTab(event, 'plasmid')">Plasmid</button>
+			</div>
+
+			<form method="POST" autocomplete="off">
+			<div id="Rep" class="tabcontent">
+			  <h3>Repressor</h3>
+			  <p>A protein that binds to the operator and prevents transcription of LacZ and LacY</p>
+			  <span class = "WordBlock">
+					<label class="Mycontainer">none : Functional ‘wild type’ Repressor.
+						<input class="checkbox" id="c2" type="checkbox" onclick="cb_uncheck_div(this)" name="noneI" checked>
+						<span class="checkmark"></span>
+					</label>
+
+			    <label class="Mycontainer">lacI- : mutation which eliminates repressor function.
+			      <input class="checkbox" id="c1" type="checkbox" onclick="cb_uncheck_div(this)" name="lacI-">
+				  	<span class="checkmark"></span>
+					</label>
+
+					<label class="Mycontainer">lacIs : A ‘Super’ repressor which no longer responsive to Allolactose.
+					  <input class="checkbox" id="c0" type="checkbox" onclick="cb_uncheck_div(this)" name="lacIs">
+					  <span class="checkmark"></span>
+					</label>
+
+			  </span>
+			</div>
+
+			<div id="Bgal" class="tabcontent">
+			  <h3>Beta-Galactasidase (LacZ)</h3>
+			  <p>An enzyme binds lactose and catalyzes its conversion into allolactose
+					 and glucose which will be eventually metabolized into energy.</p>
+			  <span class = "WordBlock" id = "LaczForm">
+					<label class="Mycontainer">none : Functional ‘wild type’ lacZ enzyme.
+						<input class="checkbox" id="c4" type="checkbox" onclick="cb_uncheck_div(this)" name="noneZ" checked>
+						<span class="checkmark"></span>
+					</label>
+			  		<label class="Mycontainer">lacZ- : mutation which elimates B-galactosidase function.
+					  <input class="checkbox" id="c3" type="checkbox" onclick="cb_uncheck_div(this)" name="lacZ-">
+					  <span class="checkmark"></span>
+				  </label>
+			  </span>
+			</div>
+
+			<div id="Perm" class="tabcontent">
+			  <h3>Permease (LacY)</h3>
+			  <p>A membrane protein that speeds the transport of lactose into the cell</p>
+			  <span class = "WordBlock">
+				<label class="Mycontainer">none : Functional ‘wild type’ Permase
+					<input class="checkbox" id="c6" type="checkbox" onclick="cb_uncheck_div(this)" name="noneY" checked>
+						<span class="checkmark"></span>
+				</label>
+			  	<label class="Mycontainer">lacY- : A mutation which eliminates permease function
+				  <input class="checkbox" id="c5" type="checkbox" onclick="cb_uncheck_div(this)" name="lacY-">
+					  <span class="checkmark"></span>
+				 </label>
+
+			  </span>
+			</div>
+
+			<div id="Prom" class="tabcontent">
+			  <h3>Promoter</h3>
+			  <p>Promotes the transcription of lacZ and LacY</p>
+			  <span class = "WordBlock">
+					<label class="Mycontainer"> none : Functional ‘wild type’ Promoter
+						<input class="checkbox" id="c8" type="checkbox" onclick="cb_uncheck_div(this)" name="noneP" checked>
+						<span class="checkmark"></span>
+					</label>
+			  	<label class="Mycontainer"> lacP- : A mutation which deletes the Promoter.
+					  <input class="checkbox" id="c7" type="checkbox" onclick="cb_uncheck_div(this)" name="lacP-">
+					  <span class="checkmark"></span>
+				  </label>
+			  </span>
+			</div>
+
+			<div id="Op" class="tabcontent">
+			  <h3>Operator</h3>
+			  <p>A binding site for Repressor, which can Repress transcription of lacZ and lacY</p>
+			  <span class = "WordBlock">
+					<label class="Mycontainer"> none : Functional ‘wild type’ Operator
+						<input class="checkbox" id="c10" type="checkbox" onclick="cb_uncheck_div(this)" name="noneO" checked>
+						<span class="checkmark"></span>
+					</label>
+			  	<label class="Mycontainer"> lacOc : mutation which deletes the Operator
+				    <input class="checkbox" id="c9" type="checkbox" onclick="cb_uncheck_div(this)" name="lacOc">
+				    <span class="checkmark"></span>
+				  </label>
+			  </span>
+			</div>
+
+			<div id="CAP" class="tabcontent">
+			  <h3>CAP-cAMP</h3>
+			  <p>The Catabolite Activator Protein (CAP) essentially detects low glucose conditions.	CAP complexs
+					with cAMP, which induces it bind upstream of the lac operon and increases
+					its transcription. To simplify the graphs for new users, we have set CAP to default to Inactive.
+					When you are ready to think about CAP function, modify it to Active and notice and the difference(s).</p>
+			  <span class = "WordBlock">
+					<label class="Mycontainer"> Inactive : non-Functional CAP-cAMP complex
+						<input class="checkbox" id="c12" type="checkbox" onclick="cb_uncheck_div(this)" name="Inactive" checked>
+						<span class="checkmark"></span>
+					</label>
+			  	<label class="Mycontainer"> Active : CAP-cAMP complex is able to form
+				    <input class="checkbox" id="c11" type="checkbox" onclick="cb_uncheck_div(this)" name="Active">
+				    <span class="checkmark"></span>
+				  </label>
+			  </span>
+			</div>
+
+			<div id="sugars" class="tabcontent">
+			  <h3>Sugar Concentration</h3>
+			  <p>Varying sugar concentrations within and outside the cell.</p>
+
+			  <span class = "WordBlock">
+					<div class = "flex-container">
+						<div id= "options_div1">
+							{{ render_field(form.LI) }}
+							{{ render_field(form.LO) }}
+						</div>
+						<div>
+							{{ render_field(form.ALLO) }}
+							{{ render_field(form.GLU)}}
+						</div>
+					</div>
+				</span>
+			</div>
+
+			<div id="plasmid" class="tabcontent">
+			  <h3>Plasmid</h3>
+			  <p>Selecting Plasmid will introduce a second copy of the lac operon (on a plasmid) to the cell,
+					 making a merodiploid cell. This technique was classically used determine if a certain
+					 mutation can influence expression on other pieces of DNA or not. This is known as the ‘cis trans test’.</p>
+			  <span class = "WordBlock">
+
+					<div class = "flex-container">
+						<div>
+							<label class="Mycontainer"> Present
+								<input class="checkbox" type="checkbox" id = "plasmid-present" onclick ="cb_uncheck(this, 'plasmid-absent')" name="plasmid-present">
+								<span class="checkmark"></span>
+							</label>
+						</div>
+
+						<div>
+							<label class="Mycontainer"> Absent
+								<input class="checkbox" type="checkbox" id = "plasmid-absent" onclick = "cb_uncheck(this, 'plasmid-present')"  checked>
+								<span class="checkmark"></span>
+							</label>
+						</div>
+					</div>
+
+					<div class = "optional-container">
+
+						<h3>Promoter</h3>
+						<div>
+							<label class="Mycontainer"> Present : Functional ‘wild type’ Promoter.
+								<input class="checkbox" type="checkbox" name="p_noneP" onchange="cb_uncheck_div(this)" checked>
+								<span class="checkmark"></span>
+							</label>
+							<label class="Mycontainer"> None : No lac promoter present on plasmid.
+								<input class="checkbox" type="checkbox" name="p_lacP-" onchange="cb_uncheck_div(this)">
+								<span class="checkmark"></span>
+							</label>
+						</div>
+
+						<h3>Operator </h3>
+						<div>
+							<label class="Mycontainer"> Present : Functional ‘wild type’ Operator.
+								<input class="checkbox"  type="checkbox" name="p_noneO" onchange="cb_uncheck_div(this)" checked>
+								<span class="checkmark"></span>
+							</label>
+							<label class="Mycontainer"> Absent : No lac operator present on plasmid.
+								<input class="checkbox"type="checkbox" name="p_lacOc" onchange="cb_uncheck_div(this)">
+								<span class="checkmark"></span>
+							</label>
+						</div>
+
+						<h3>Repressor </h3>
+						<div>
+							<label class="Mycontainer">None : Functional ‘wild type’ Repressor.
+								<input class="checkbox" type="checkbox" name="p_noneI" onchange="cb_uncheck_div(this)" checked>
+								<span class="checkmark"></span>
+							</label>
+							<label class="Mycontainer">lacIs : A ‘Super’ repressor which no longer responsive to Allolactose.
+								<input class="checkbox" type="checkbox" name="p_lacIs" onchange="cb_uncheck_div(this)">
+								<span class="checkmark"></span>
+							</label>
+							<label class="Mycontainer">Absent : No repressor present on plasmid.
+								<input class="checkbox"  type="checkbox" name="p_lacI-"onchange="cb_uncheck_div(this)">
+							<span class="checkmark"></span>
+							</label>
+						</div>
+
+						<h3>Beta-Galactasidase </h3>
+						<div>
+							<label class="Mycontainer">Present : Functional ‘wild type’ lacZ enzyme
+								<input class="checkbox" type="checkbox" name="p_noneZ" onchange="cb_uncheck_div(this)" checked>
+								<span class="checkmark"></span>
+							</label>
+							<label class="Mycontainer">Absent : No lacZ gene present on plasmid.
+								<input class="checkbox"type="checkbox" name="p_lacZ-"onchange="cb_uncheck_div(this)">
+								<span class="checkmark"></span>
+							</label>
+						</div>
+
+						<h3>Permease</h3>
+						<div>
+							<label class="Mycontainer">Present : Functional ‘wild type’ Permase
+								<input class="checkbox" type="checkbox" name="p_noneY" onchange="cb_uncheck_div(this)" checked>
+								<span class="checkmark"></span>
+							</label>
+							<label class="Mycontainer">Absent : No lacY gene on plasmid.
+								<input class="checkbox"type="checkbox" name="p_lacY-" onchange="cb_uncheck_div(this)">
+								<span class="checkmark"></span>
+							</label>
+						</div>
+					</div>
+			  </span>
+			</div>
+
+			<input id="GG" type="submit" value="Run Pathway & Make Graph"><p><font color = "red">{{ is_valid }}</font></p><br><br>
+		</form>
+		</div><br>
+		<div class = "flex-container">
+
+			<div style="flex-grow: 0.5; margin-left: 50px;">
+				<h3><u>Initial Sugar Concentrations</u></h3>
+					<dd onload = 'display_input(self, "sugars")'>Lactose Exterior: <b>{{legend["Sugar Concentration"][2]}}</b></dd>
+					<dd>Glucose: <b>{{legend["Sugar Concentration"][3]}}</b></dd>
+					<dd>Lactose Interior: <b>{{legend["Sugar Concentration"][1]}}</b></dd>
+					<dd>Allolactose: <b>{{legend["Sugar Concentration"][0]}} </b></dd>
+				<h3><u>Lactose Operon</u></h3>
+					<dd>Promoter: <b>{{legend["Lactose Operon"][0]}}</b></dd>
+					<dd>Operator: <b>{{legend["Lactose Operon"][4]}}</b></dd>
+					<dd>Repressor: <b>{{legend["Lactose Operon"][5]}}</b></dd>
+					<dd>Permease: <b>{{legend["Lactose Operon"][2]}}</b></dd>
+					<dd>Beta-Galactasidase: <b>{{legend["Lactose Operon"][1]}}</b></dd>
+					<dd>CAP-cAMP: <b>{{legend["Lactose Operon"][3]}}</b></dd>
+				<h3><u>Plasmid</u></h3>{{ render_plasmid(legend["Plasmid"]) }}
+
+			</div>
+
+			<div class="container" align="center" style="flex-grow: 20; margin-left: 50px;">
+				<embed type="image/svg+xml" src={{graph_data|safe}} style='max-width:1300px' id = "ConcentrationGraph"/>
+			</div><br>
+
+		</div>
+	</div>
+
+	<div id="endPage">
+	  <br><p>For copyright and references see <a href = "/about"> about page.</a></p>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,85 @@
+.topPage p{
+	text-indent: 40px;
+	margin-right:70px;
+	text-align:left;
+	font-family: sans-serif;
+	margin-left: 60px;
+}
+
+.topPage span{
+	margin-left: 30px;
+}
+
+#Img{
+	float: right;
+	border: 1px solid black;
+	width: 32%;
+	padding: 0px;
+	margin-top: 2px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	margin-left: 10px;
+}
+
+#Graph{
+	width: 95%;
+	height: 700px;
+	border: solid #bababa;
+}
+
+#introduction{
+	text-align:center;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.flex-container > div {
+  background-color: white;
+  width: auto;
+  margin-left: 20px;
+  text-align: left;
+  line-height: 35px;
+}
+
+#options_div1{
+	margin-left: 10px;
+}
+
+#subBlock1{
+	text-align:center;
+}
+
+#mutOpt{
+	text-align: left;
+}
+
+#concOpt{
+	text-align: right;
+}
+
+.options{
+	color: black;
+	padding: -10px;
+}
+
+.textInputBox{
+	background-color: #b2b4b7;
+	border: 1px solid black;
+}
+
+#GG{
+	overflow:hidden;
+	padding: 10px 16px;
+	transition: 0.3s;
+	content: "";
+	float: left;
+	background-color: #a8c6f4;
+	cursor: pointer;
+	}
+
+#GG:hover{
+	background-color:#d1e1f9;
+}

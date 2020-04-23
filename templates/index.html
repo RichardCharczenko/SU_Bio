@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/HomeSheet_12.css') }}">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/StyleSheet_1.css') }}">
+
+	<div class="topPage">
+		<br>
+		<span>
+	    <p class = 'paragraph_title'>SUperBiology</p>
+		 	<p id = 'description'>Is a free set of web tools created to help students learn the big ideas of modern biomolecular science.
+     	Each tool and simulation comes with a example tutorial/lesson plan that may be useful to faculty.
+     	Each also is designed to be customizable for open ended exploration and pedagogy.
+     	These tools were created by bioinformatics faculty and undergraduate students, primarily in the Rutherford Lab at Seattle University (SU).
+			</p>
+	  </span>
+		<br>
+		<span>
+			<p class = 'paragraph_title'>Contributors and Alumni</p>
+			<dl class = 'Contributors'>
+				<dt><a href='https://www.seattleu.edu/scieng/about/faculty-and-staff/robert-rutherford-phd.html'>Robert Rutherford, PhD.</a></dt>
+				<br>
+				<dt>Richard Charczenko: </dt>
+					<dd>Seattle University, Cell and Molecular/BioChemistry/Computer Science undergraduate</dd>
+				<dt>Madeline McMahon</dt>
+					<dd>Seattle University, Biology undergraduate</dd>>
+				<dt>Sam Levy:</dt>
+					<dd>Seattle University alum 2018 Cell and Molecular Biology program </dd>
+				<dt>Jeremy Bjelajac:</dt>
+				 	<dd>Seattle University alum 2018 Cell and Molecular Biology program</dd>
+				<dt>Nicolas Garcia:</dt>
+					<dd>Seattle University alum 2018 Cell and Molecular Biology program</dd>
+			</dl>
+		</span>
+		<br>
+	</div>
+
+	<div class="MidPage">
+ 		<br>
+				<a href = "/lacop"><span class = "midImageBox"><img src = {{ lacOpImg }}></span></a>
+				<a href="/evo" ><span class = "midImageBox"><img id = 'evoImg' src = {{ evoImg }}></span></a>
+				<a href = "/fase"><span class = "midImageBox"><img src = {{ faseImg }}></span></a>
+				<br>
+				<div class ='lab_box'>
+					<p class = 'paragraph_title'> LacOp </p>
+					<p> A simulation of the lactose operon, designed to help students learn and master simple
+						genetics concepts usign the lactose operon as a basic example. </p>
+				</div>
+				<div class ='lab_box'>
+					<p class = 'paragraph_title'> Evo</p>
+					<p>A simluation of evolution in snowshoe hares, meant to aid students learning of
+					simple evolutionary concepts and effects of enviroment on phenotypes.</p>
+				</div>
+				<div class ='lab_box'>
+					<p class = 'paragraph_title'> Fase</p>
+					<p> A faux sequence mutator that generates novel mutated peptide or nucleotide sequences, given
+					an original sequence. Meant to aid teachers. </p>
+				</div>
+	</div>
+
+	<div id="endPage">
+	  <p><!--Protein Image obtained from <a href = "http://www.rcsb.org/structure/1PV6"> Abramson et. al</a>.<br>-->For copyright and references see
+			<a href = "/about"> about page.</a></p>
+	</div>
+
+{% endblock %}

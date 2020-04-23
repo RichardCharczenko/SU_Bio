@@ -1,0 +1,117 @@
+{% extends 'layout.html' %}
+{% block body %}
+<script LANGUAGE="javascript" src = "{{url_for('static', filename='scripts/scripts.js')}}"></script>
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/EVO_12.css') }}">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/StyleSheet_1.css') }}">
+
+	<h2 id="header">Population Genetics Simulation</h2>
+
+	<div class="topPage">
+	  <img src="{{ user_image }}" id="Img">
+	  <span>
+
+	    <p>This simulation is designed help users learn population genetics, and draws upon field work on snow shoe hares
+			for inspiration. The scenarios below simulate the effect of population size (large vs. small), the absence
+			or presence of natural selection in the form of predation, and lastly, the possible effects of climate change.
+			Snowshoe hares survives in an environment that changes drastically based on the given season. In winter
+			hares have a snow-white coat of fur and when the snow melts the hares coat changes to brown. The timing of this
+			change can affect the rate of survival of the hare in the wild if an animal mismatches its environment and
+			is more easily detected by predators, and shows up to a 7% reduction in fitness per week. The affect can be seen
+			in the frequency of the allele in the hare population over time.
+		</p>
+		<p>
+			<br>
+			<b>Note: </b>Although this simulation is generally consistent with the research findings it has been optimized as
+			 a population genetics teaching tool rather than to accurately simulate field reality; the best picture of ‘real ecology’
+			 can be seen by contacting the ecologists <a>(research pdf)</a>.
+		</p>
+			<a href = "{{ lesson_file }}" class="Download"> <button class="collapsible">Download Worksheet</button></a>
+
+	  </span>
+	</div>
+
+	<div id="graphDef">
+      <p id = "introduction" style="padding:10px;">There are 6 preset situations that are common occurences in the wild. Each replicates what would you would see
+			normally if there were climate change or no climate change.</p>
+
+	<div id= "options">
+		<div class="tab">
+		  <button class="tablinks active" onclick="openTab(event, 'Opt')"><font size = +1>Scenario's</font></button>
+		 <!-- <button class="tablinks" onclick="openTab(event, 'Cust')"><font size = +1>Custom Input</font></button> -->
+		</div>
+
+		<form method="POST">
+      <div id="Opt" class="tabcontent">
+  		  <h3>Evolution Simulator</h3>
+  		  <p>Each scenario below models the frequencies of 4 different alleles 50 years (~150 hare generations).
+			  To help us understand population genetics, each scenario simulates a population which starts with
+			  4 equally abundant alleles (A.wk.15, A.wk.24, A.wk.26, A.wk.35). The number in each allele name
+			  indicates the week of the year a homozygote will switch its coat from white to brown. All alleles
+			  are incompletely dominant (heterozygotes will show a phenotype which averages their two alleles).
+			  As in the biosphere, results may vary. Fortunately you will find it simple (re)run this online
+			  simulation repeatedly to get a sense of the general trends and the underlying rules of population
+			  genetics.</p>
+  		  <span class = "WordBlock">
+					<div class = "flex-container">
+						<div id= "options_div1">
+							<label class="Mycontainer">Scenario 1:<font size = +0>No selection, large population, and stable climate.</font>
+								<input class="checkbox" type="checkbox" onchange="cbChange(this)" name = 'Scenario1' checked>
+								<span class="checkmark"></span>
+							</label>
+							<br>
+							<label class="Mycontainer">Scenario 2:<font size = +0> No selection, small population, and stable climate.</font>
+								<input class="checkbox" type="checkbox" onchange="cbChange(this)" name = 'Scenario2'>
+								<span class="checkmark"></span>
+							</label>
+							<br>
+							<label class="Mycontainer">Scenario 3:<font size = +0> Selection with a large population, and stable climate.</font>
+								<input class="checkbox" type="checkbox" onchange="cbChange(this)" name = 'Scenario3'>
+								<span class="checkmark"></span>
+							</label>
+						</div>
+
+						<div>
+							<label class="Mycontainer">Scenario 4:<font size = +0>  Selection with a small population, and stable climate.</font>
+								<input class="checkbox" type="checkbox" onchange="cbChange(this)" name = 'Scenario4'>
+								<span class="checkmark"></span>
+							</label>
+							<br>
+							<label class="Mycontainer">Scenario 5: <font size = +0>Selection with a large population, and unstable climate.</font>
+								<input class="checkbox" type="checkbox" onchange="cbChange(this)" name = 'Scenario5'>
+								<span class="checkmark"></span>
+							</label>
+							<br>
+							<label class="Mycontainer">Scenario 6: <font size = +0>Selection with a small population, and unstable climate.</font>
+								<input class="checkbox" type="checkbox" onchange="cbChange(this)" name = 'Scenario6'>
+								<span class="checkmark"></span>
+							</label>
+						</div>
+					</div>
+			</span>
+  		</div>
+
+		<div id="Cust" class="tabcontent">
+			<span class = "WordBlock">
+				FOO TEXT
+  			</span>
+		</div>
+
+		<input id="GG" type="submit" value="Run Simulation"><br><br>
+	 </form>
+	</div><br>
+
+		<div class="container" align="center">
+			<embed type="image/svg+xml" src={{graph_data|safe}} style='max-width:1000px' id = "Graph"/>
+			<embed type="image/svg+xml" src={{snow_melt_graph|safe}} style='max-width:1000px' id = "Graph"/>
+		</div>
+	</div>
+
+	<div id="endPage">
+	  <p>For copyright and references see <a href = "/about"> about page.</a></p>
+	</div>
+
+	<script language="javascript">
+		document.getElementById("Opt").style.display = 'block';
+	</script>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<script LANGUAGE="javascript" src = "{{url_for('static', filename='scripts/scripts.js')}}"></script>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/Fase_13.css') }}">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/StyleSheet_1.css') }}">
+
+<h2 id="header"> FaSe Laboratory</h2>
+
+	<div class="topPage">
+	  <span>
+	    <p>FASE is a Faux Sequence mutator will simulate molecular evolution by mutating nucleic
+				 acid or protein sequences to a user specified percent divergence. The "Create a Tree
+				 of Sequences" option will create a set of derivative sequences with a KNOWN evolutionary
+				 relationship(s). A tree of this sort can be used to test software that generates
+				phylogenetic trees from laboratory samples.</p>
+	  </span>
+	</div>
+
+		<div id= "options">
+			<div class="tab">
+				<button class="tablinks" onclick="openTab(event, 'TreeOpt')">Fase</button>
+			</div>
+
+			{% from "_formFase.html" import render_field %}
+			{% from "_formFase.html" import render_data %}
+			{% from "_formFase.html" import render_tree_seq %}
+			<form method="POST" id = "usrform" autocomplete="off">
+				<div id="TreeOpt" class="tabcontent">
+					<h3>Phylogenetic Trees</h3>
+					<p>Used to track changes in sequences through generations</p>
+					<div class = "flex_container">
+						<div>
+									{{ render_field(f_form.generation_type) }}
+									{{ render_field(f_form.seq_type) }}
+									{{ render_field(f_form.sequence) }}
+									{{ render_field(f_form.divergence) }}
+									{{ render_field(f_form.MaxChildren) }}
+									<br><input id="GG" type="submit" name ="btn" value="Generate Values">
+						</div>
+
+						<div>
+							{%if  dataTree %}
+							<pre>{{dataTree}}</pre>
+							{%endif%}
+							{%if  dataM %}
+							<p> {{ render_data(dataM) }}</p>
+							{%endif%}
+						</div>
+
+						{% if dataSeq %}
+						<h3> Fasta Sequences </h3>
+						<span>
+							{{ render_tree_seq(dataSeq)}}
+						</span>
+						{% endif %}
+
+					</div>
+				</div>
+		 </form>
+		</div><br>
+
+	<div id="endPage">
+	  <p>For copyright and references see <a href = "/about"> about page.</a></p>
+	</div>
+	<script language="javascript">
+		document.getElementById("TreeOpt").style.display = 'block';
+	</script>
+{% endblock %}

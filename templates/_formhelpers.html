@@ -1,0 +1,41 @@
+{% macro render_field(field) %}
+  <dt>{{ field.label }}
+  <dd>{{ field(**kwargs)|safe }}
+  {% if field.errors %}
+    <ul class=errors>
+    {% for error in field.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  </dd>
+{% endmacro %}
+
+
+{% macro render_radio(field) %}
+  <h3>{{ field.label}} </h3>
+    {{ field(**kwargs)|safe }}
+{% endmacro %}
+
+
+{%macro render_legend(labels) %}
+        {% for value in labels %}
+            <h3>{{ value }}</h3>
+            {% if value == "Lactose Operon" %}
+                {% for item in labels[value] %}
+                    <dd>{{ item[:5] }}</dd>
+                {%endfor%}
+            {%endif%}
+
+            {% if value == "Sugar Concentration"%}
+                {%for item in labels[value]%}
+                {%endfor%}
+            {%endif%}
+        {%endfor%}
+{% endmacro %}
+
+{%macro render_plasmid(plasmid_dict)%}
+    {% for value in plasmid_dict %}
+        <dd>{{ value }} : {{ plasmid_dict[value] }}</dd>
+    {% endfor %}
+{% endmacro %}
