@@ -1,5 +1,5 @@
 from Evo import generate_scenario
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request
 import pygal
 import os
 
@@ -7,8 +7,9 @@ PNG_FOLDER = os.path.join('static', 'images')
 application = app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = PNG_FOLDER
 
+
 def evo():
-    ''' Handles general URL request for EVO webpage'''
+    """ Handles general URL request for EVO webpage"""
     full_filename = os.path.join(app.config['UPLOAD_FOLDER'], '.png')
     evo_page_image = os.path.join(app.config['UPLOAD_FOLDER'], 'Evo_Image.png')
     lesson_file = os.path.join(app.config['UPLOAD_FOLDER'], 'EvoPopGen _Web_Lab.docx')
@@ -21,14 +22,15 @@ def evo():
     snow_melt_graph.title = "Climate"
     snow_melt_graph_data = snow_melt_graph.render_data_uri()
     return render_template('evo.html',
-                            graph_data = graph_data,
-                            snow_melt_graph = snow_melt_graph_data,
-                            user_image = evo_page_image,
-                            lesson_file = lesson_file)
+                           graph_data=graph_data,
+                           snow_melt_graph=snow_melt_graph_data,
+                           user_image=evo_page_image,
+                           lesson_file=lesson_file)
+
 
 def evo_form():
-    ''' Handles POST URL request for EVO webpage, form data is validated
-    and if form is valid, EVO program is run under user specified conditions'''
+    """ Handles POST URL request for EVO webpage, form data is validated
+    and if form is valid, EVO program is run under user specified conditions"""
     if request.method != 'POST':
         return evo()
     full_filename = os.path.join(app.config['UPLOAD_FOLDER'], '.png')
@@ -48,12 +50,11 @@ def evo_form():
     elif request.form.get('Scenario6'):
         data = generate_scenario(6)
 
-
     graph = pygal.Line(x_title='Time (years)', y_title='Allele frequency')
     graph.title = "Allele Frequency Over Time"
     reversed_data = data[0].reverse()
-    graph.x_labels = range(0, 50, 10)#data[0]
-    graph.y_labels =  0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0
+    graph.x_labels = range(0, 50, 10)  # data[0]
+    graph.y_labels = 0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0
     if request.form.get('Scenario1'):
         graph.add('A.Wk.' + str(data[-1][0]), data[2])
         graph.add('A.Wk.' + str(data[-1][1]), data[3])
@@ -64,7 +65,7 @@ def evo_form():
         graph.add('A.Wk.' + str(data[-1][1]), data[3])
         graph.add('A.Wk.' + str(data[-1][2]), data[4])
         graph.add('A.Wk.' + str(data[-1][3]), data[5])
-        #graph.add('A.Wk.' + str(data[-1][4]), data[6])
+        # graph.add('A.Wk.' + str(data[-1][4]), data[6])
     else:
         graph.add('A.Wk.:' + str(data[-1][0]), data[2])
         graph.add('A.Wk.' + str(data[-1][1]), data[3])
@@ -72,7 +73,7 @@ def evo_form():
         graph.add('A.Wk.' + str(data[-1][3]), data[5])
     graph_data = graph.render_data_uri()
 
-    snow_melt_graph = pygal.XY(x_title = 'Time (years)', y_title = 'Week of Snowmelt')
+    snow_melt_graph = pygal.XY(x_title='Time (years)', y_title='Week of Snowmelt')
     snow_melt_graph.title = 'Climate'
     snow_melt_graph.y_labels = range(10, 30, 2)
     if request.form.get('Scenario6'):
@@ -93,7 +94,7 @@ def evo_form():
         snow_melt_graph.add('Climate', graph_points)
     snow_melt_graph_data = snow_melt_graph.render_data_uri()
     return render_template('evo.html',
-                            graph_data = graph_data,
-                            snow_melt_graph = snow_melt_graph_data,
-                            user_image = evo_page_image,
-                            lesson_file = lesson_file)
+                           graph_data=graph_data,
+                           snow_melt_graph=snow_melt_graph_data,
+                           user_image=evo_page_image,
+                           lesson_file=lesson_file)

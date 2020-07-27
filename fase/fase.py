@@ -17,6 +17,7 @@ def fasta_format(data, name):
         fasta_form.append(newLine)
     return fasta_form
 
+
 def main_fase(sequence, divergence, sequenceType, outPerIns):
     """ Driver duntion for fase, collects 4 inputs and passes them into mut function within fase.py
     then uses formating function to prep for them the website."""

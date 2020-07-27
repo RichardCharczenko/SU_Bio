@@ -1,11 +1,10 @@
 import os
-import sys
 
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request
 
-from faseApp import fase_form
-from EVO_App import evo, evo_form
-from lacOp_App import lacop_form
+from fase.faseApp import fase_form
+from evo.EVO_App import evo, evo_form
+from lacop.lacOp_App import lacop_form
 from CC import CC_form
 
 
@@ -70,6 +69,6 @@ def run_CC():
 
 
 if __name__ == '__main__':
-    website_url = 'supergenetics.org'
-    app.config['SERVER_NAME'] = website_url
+    #website_url = 'supergenetics.org'
+    #app.config['SERVER_NAME'] = website_url
     app.run(debug=False)

@@ -1,5 +1,5 @@
 
-class CAPcAMP():
+class CAPcAMP:
 
     def __init__(self, status):
         if status == "Inactive":
