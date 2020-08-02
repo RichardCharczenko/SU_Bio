@@ -33,11 +33,19 @@ class singleAAchange(object):
                                      "Point"]
 
     def delChange(self, item):
+        """
+        adds a deletion change to the dictionary
+        :params item: a change
+        """
         self.polarChange[item[0]] = [item[1],
                                      self.AAdictionary[item[1].upper()],
                                      "Del"]
 
     def inChange(self, item):
+        """
+        records a insertion change within fase
+        :params item: a change
+        """
         self.polarChange[item[0]] = [item[1],
                                      self.AAdictionary[item[1].upper()],
                                      "In"]

@@ -10,14 +10,34 @@ app.config['UPLOAD_FOLDER'] = PNG_FOLDER
 
 
 class lacopForm(Form):
-    """Form validation class for the lactose operon webpage form input. The lacOp Lab webpage
+    """
+    Form validation class for the lactose operon webpage form input. The lacOp Lab webpage
     contains one form that has 3 Float Fields, and 11 checkbox (or BooleanField) inputs. The 3
     FloatFields must be filled out, but only certain BooleanField must be true or checked. Floats
-    cannot be greater than 1000 or less than 0. If the form is valid it will return true. """
+    cannot be greater than 1000 or less than 0. If the form is valid it will return true.
+    """
+
+    #TODO build a internal validation
+
     ALLO = FloatField('Allolactose', validators=[validators.input_required()], default=0)
     LO = FloatField('Lactose Outside', validators=[validators.input_required()], default=200)
     LI = FloatField('Lactose Inside', validators=[validators.input_required()], default=0)
     GLU = FloatField('Glucose', validators=[validators.input_required()], default=0)
+
+    def __init__(self):
+        fields = {
+            'allo': FloatField('Allolactose', validators=[validators.input_required()], default=0),
+            'lac_out': FloatField('Lactose Outside', validators=[validators.input_required()], default=200),
+            'lac_in': FloatField('Lactose Inside', validators=[validators.input_required()], default=0),
+            'glucose': FloatField('Glucose', validators=[validators.input_required()], default=0),
+            'promoter': RadioField('Promoter', choices=['none', 'lacP-']),
+            'operator': RadioField('Operator', choices=['none', 'lacOc']),
+            'repressor': RadioField('Repressor', choices=['none', 'lacI-', 'lacIs']),
+            'permease': RadioField('Permease', choices=['none', 'lacY-']),
+            'bgal': RadioField('Beta-Galactasidase', choices=['none', 'lacZ-']),
+            'cap_camp': RadioField('CAP-cAMP', choices=[('Inactive', 'Active')])
+        }
+
     plasmid_option = RadioField('Optional plasmid', choices=[('Present', 'Present'), ('Absent', 'Absent')])
 
     def validate(self):
@@ -28,9 +48,11 @@ class lacopForm(Form):
         return True
 
 
-def buildMutL():
-    """properly formats form data into a list that can be passed
-    into lacoperon function"""
+def build_mut_list():
+    """
+    properly formats form data into a list that can be passed
+    into lacoperon function
+    """
     mutL = []
     plasmid = []
     for item in request.form:
@@ -42,7 +64,7 @@ def buildMutL():
     return mutL, plasmid
 
 
-def generateTitle(list):
+def generate_title(list):
     """Generates a graph title for lacop Webpage graphical dsiplay. The title is based
     on user given input"""
     title = ''
@@ -98,7 +120,7 @@ def format_legend(labels, values, plasmid):
     return sorted
 
 
-def plasmidPresent():
+def plasmid_present():
     for item in request.form:
         if item == "plasmid-present":
             return True
@@ -106,31 +128,34 @@ def plasmidPresent():
 
 
 def lacop_form():
-    """Handles URL request to lacop Lab webpage, there IS formdata gatherered from
+    """
+    Handles URL request to lacop Lab webpage, there IS formdata gatherered from
     one form on the LacOp lab. The data is validated and if valid, the lactose
-    operon program is run using user specified data"""
+    operon program is run using user specified data
+    """
     form = lacopForm(request.form)
-    full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'LacOp_img.png')
+    image_file = os.path.join(app.config['UPLOAD_FOLDER'], 'LacOp_img.png')
     lesson_file = os.path.join(app.config['UPLOAD_FOLDER'], 'LacOP_Web_Lab.docx')
-    formWarning = 'Please fill out all inputs'
+    form_warning = ''
+
     if request.method == "POST" and form.validate():
-        formWarning = ""
-        form_data = buildMutL()
-        if plasmidPresent():
+        form_data = build_mut_list()
+        if "plasmist=present" in request.form:
             cell = RunLO(form_data[0], form_data[1], int(request.form.get('ALLO')), int(request.form.get('LI')),
                          int(request.form.get('LO')), int(request.form.get('GLU')))
         else:
             cell = RunLO(form_data[0], [], int(request.form.get('ALLO')), int(request.form.get('LI')),
                          int(request.form.get('LO')), int(request.form.get('GLU')))
-        ConcDict = cell.archiveConditions
+        concentration_dict = cell.archiveConditions
+
         try:
             graph = pygal.XY(x_title='Psuedo Seconds', y_title='Molecular Units')
             graph.title = "Operon Graph"  # generateTitle(form_data[0])
             graph.x_labels = range(0, 401, 20)
-            for item in ConcDict:
+            for item in concentration_dict:
                 graph_points = []
-                for index in range(len(ConcDict[item])):
-                    graph_points.append((index, ConcDict[item][index]))
+                for index in range(len(concentration_dict[item])):
+                    graph_points.append((index, concentration_dict[item][index]))
                 if item == "allo":
                     item = 'Allolactose'
                 if item == "lacIn":
@@ -149,8 +174,8 @@ def lacop_form():
             return render_template('lacop.html',
                                    graph_data=graph_data,
                                    form=form,
-                                   user_image=full_filename,
-                                   is_valid=formWarning,
+                                   user_image=image_file,
+                                   is_valid=form_warning,
                                    legend=legend_data,
                                    lesson_file=lesson_file)
         except Exception, e:
@@ -168,7 +193,7 @@ def lacop_form():
         return render_template('lacop.html',
                                graph_data=graph_data,
                                form=form,
-                               user_image=full_filename,
-                               is_valid=formWarning, \
+                               user_image=image_file,
+                               is_valid=form_warning,
                                legend={"Sugar Concentration": [], "Lactose Operon": [], "Plasmid": plasmid_legend},
                                lesson_file=lesson_file)

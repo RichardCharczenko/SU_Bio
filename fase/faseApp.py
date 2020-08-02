@@ -59,22 +59,24 @@ class fase_tree_form(Form):
 
 
 def fase_form():
-    """ Handles POST and GET URL request for FaSe webpage, form data is validated
-    and if form is valid, FaSe program is run under user specified conditions"""
+    """
+    Handles POST and GET URL request for FaSe webpage, form data is validated
+    and if form is valid, FaSe program is run under user specified conditions.
+    """
     fase_form = Fase_Form(request.form)
     dataPep = ""
     dataNuc = ""
 
     if fase_form.validate():
-        sequenceType = request.form.get('seq_type')[:3].lower()
+        sequence_type = request.form.get('seq_type')[:3].lower()
         sequence = request.form.get('sequence')
 
         if request.form.get('generation_type') == 'Phylogentic Tree':
-            data = main_tree(sequence, sequenceType, int(request.form.get('MaxChildren')),
+            data = main_tree(sequence, sequence_type, int(request.form.get('MaxChildren')),
                              float(request.form.get('divergence')))
             return render_template('fase.html', dataTree=data[0], dataSeq=data[1], f_form=fase_form, dataM=None)
         else:
-            data = main_fase(sequence, float(request.form.get("divergence")), sequenceType,
+            data = main_fase(sequence, float(request.form.get("divergence")), sequence_type,
                              float(request.form.get('MaxChildren')))
             return render_template('fase.html', dataM=data, f_form=fase_form, dataTree=None)
     return render_template('fase.html', f_form=fase_form)
