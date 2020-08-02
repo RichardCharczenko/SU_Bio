@@ -5,7 +5,7 @@ from flask import Flask, render_template, request
 from fase.faseApp import fase_form
 from evo.EVO_App import evo, evo_form
 from lacop.lacOp_App import lacop_form
-from CC import CC_form
+from CelllCycle.CC import CC_form
 
 
 PROJECTS_FOLDERS = os.path.join('projects')
