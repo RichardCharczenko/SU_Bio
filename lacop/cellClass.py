@@ -35,6 +35,8 @@ class Cell:
     def add_plasmid(self, plasmid_mut):
         """
         Updates the class with Sequence data for a plasmid.
+
+        :param plasmid_mut: a list of plasmid mutations
         """
         self.plasmid_data = Genome(plasmid_mut)
         self.plasmid = True

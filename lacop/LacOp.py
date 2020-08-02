@@ -1,4 +1,3 @@
-'''Driver file for the LacOp project'''
 from cellClass import Cell
 
 
